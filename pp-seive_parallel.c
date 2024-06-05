@@ -105,5 +105,5 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-// Compilar com: mpicc -o sieve.mpi sieve.mpi.c -lm
-// Executar com: mpirun -np <num_procs> ./sieve.mpi <N>
+// Compilar com: mpicc -o pp-seive_parallel.mpi pp-seive_parallel.c -lm
+// Executar com: mpirun -np <num_procs> ./pp-seive_parallel.mpi <N>
