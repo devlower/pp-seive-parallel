@@ -49,15 +49,15 @@ n_exec =[]
 primo(list,j,i,n,n_exec)
 
 #printa a lista final
-print(f'\nlista num_primos:',list)
+print(list)
 
-print(f'\nQtd itens verificados por passada:\n',n_exec)
+# print(f'\nQtd itens verificados por passada:\n',n_exec)
 
 soma =0
 for w in n_exec:
 	soma += w
-print(f'\nQuantidade números:', Qtd_numeros)
-print(f'Soma execuções:', soma)
+# print(f'\nQuantidade números:', Qtd_numeros)
+# print(f'Soma execuções:', soma)
 
 # Obtém o valor do tempo atual
 end = time.process_time()
