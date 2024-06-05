@@ -5,7 +5,7 @@ def primo(list, j,i):
 	for num in list:
 		if num%j==0 and num !=j:
 			 list.remove(num)
-	print(f'\nj=',j)
+	print(f'\nj={j}')
 	print(f'lista=',list)
 	print(f'Tamanho da lista parcial:',len(list))
 	j =list[i+1]
