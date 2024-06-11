@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <mpi.h>
+#include <time.h>
 
 int main(int argc, char *argv[]) {
     int *list1; /* The list of numbers <= sqrtN */
@@ -14,6 +15,11 @@ int main(int argc, char *argv[]) {
     int p = 0;  /* The total number of processes */
     int N, sqrtN; /* Total number and its square root */
     int c, m;   /* Loop counters */
+
+    int n_exec = 0;
+    clock_t start_time, end_time;
+
+    start_time = clock(); // Captura o tempo inicial
 
     /* Initialize the MPI Environment */
     MPI_Init(&argc, &argv);
@@ -49,9 +55,11 @@ int main(int argc, char *argv[]) {
     /* Set each number as unmarked */
     for (c = 2; c <= sqrtN; c++) {
         list1[c] = 0;
+        n_exec++;
     }
     for (c = L; c <= H; c++) {
         list2[c - L] = 0;
+        n_exec++;
     }
 
     /* Mark non-primes in list1 */
@@ -75,11 +83,13 @@ int main(int argc, char *argv[]) {
             if (list1[c] == 0) {
                 printf("%d ", c);
             }
+            n_exec++;
         }
         for (c = L; c <= H; c++) {
             if (list2[c - L] == 0) {
                 printf("%d ", c);
             }
+            n_exec++;
         }
         for (int src = 1; src < p; src++) {
             L = sqrtN + src * S + 1;
@@ -88,10 +98,12 @@ int main(int argc, char *argv[]) {
                 H += R;
             }
             MPI_Recv(list2, H - L + 1, MPI_INT, src, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            n_exec++;
             for (c = L; c <= H; c++) {
                 if (list2[c - L] == 0) {
                     printf("%d ", c);
                 }
+                n_exec++;
             }
         }
     } else {
@@ -100,6 +112,11 @@ int main(int argc, char *argv[]) {
 
     free(list2);
     free(list1);
+    
+    end_time = clock(); // Captura o tempo final
+    double total_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC * 1000.0; // Calcula o tempo total em milissegundos
+    printf("n-exec: %d\n", n_exec); // Exibe o número de instruções executadas
+    printf("Tempo de execucao: %.2f ms\n", total_time); // Exibe o tempo total de execução
 
     MPI_Finalize();
     return 0;
