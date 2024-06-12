@@ -108,4 +108,4 @@ int main(int argc, char *argv[]) {
 }
 
 // Compilar com: mpicc -o pp-seive_parallel.mpi pp-seive_parallel.c -lm
-// Executar com: mpirun -np <num_procs> ./pp-seive_parallel.mpi <N>
+// Executar com: mpirun --oversubscribe -np <NUM_PROCESSORS> ./pp-seive_parallel.mpi <N>
